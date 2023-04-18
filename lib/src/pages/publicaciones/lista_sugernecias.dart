@@ -3,6 +3,7 @@
 import 'package:apparriendospublicaciones/src/utils/colors.dart' as utils;
 import 'package:flutter/material.dart';
 
+//*informacion como direccion, barrio, precio, lista de imagenes, lista de iconos de detalles, lista de restricciones y descripcion
 class ListaSugernecias {
   final String direccion;
   final String barrio;

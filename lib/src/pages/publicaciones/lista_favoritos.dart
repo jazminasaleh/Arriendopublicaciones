@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:apparriendospublicaciones/src/utils/colors.dart' as utils;
 
-//*Informacion de los inmuebles que fueron guardados por el usuario
+//*Informacion de los inmuebles que fue guardado por el usuario
+//*informacion como direccion, barrio, precio, lista de imagenes, lista de iconos de detalles, lista de restricciones y descripcion
 class ListaFavoritos {
   final String direccion;
   final String barrio;

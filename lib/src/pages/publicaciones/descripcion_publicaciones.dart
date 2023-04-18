@@ -17,6 +17,7 @@ class DescripcionPublicaciones extends StatefulWidget {
   List iconosRestricciones;
   List nombreRestricciones;
   String descripcion;
+  //*constructor
   DescripcionPublicaciones(
       {super.key,
       required this.direccion,
@@ -34,13 +35,15 @@ class DescripcionPublicaciones extends StatefulWidget {
       _DescripcionPublicacionesState();
 }
 
+//*la parte de la galeria, detalles, restricciones, mapa y la parte inferior
 class _DescripcionPublicacionesState extends State<DescripcionPublicaciones> {
+  //*para el mapa
   Completer<GoogleMapController> _controller = Completer();
   UbicacionController _ubicacionController = new UbicacionController();
   @override
   Widget build(BuildContext context) {
-    final CameraPosition puntoInicial = CameraPosition(
-        target: LatLng(5.703595, -72.943689), zoom: 15, tilt: 60);
+    //*en que parte del mapa va a estar marcado
+    final CameraPosition puntoInicial = CameraPosition(target: LatLng(5.703595,-72.943689), zoom: 15, tilt: 60);
     Set<Marker> markers = new Set<Marker>();
     markers.add(
       new Marker(
@@ -49,93 +52,103 @@ class _DescripcionPublicacionesState extends State<DescripcionPublicaciones> {
       ),
     );
     return Container(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                widget.direccion,
-                style: const TextStyle(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  widget.direccion,
+                  style: const TextStyle(
                     fontSize: 25,
                     color: utils.Colors.blanco,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                widget.barrio,
-                style: const TextStyle(
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  widget.barrio,
+                  style: const TextStyle(
                     fontSize: 18,
                     color: utils.Colors.blanco,
-                    fontWeight: FontWeight.w300),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: Container(
-              height: 1,
-              width: double.infinity,
-              color: const Color.fromARGB(221, 52, 52, 52),
+                    fontWeight: FontWeight.w300
+                  ),
+                )
+              ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Galeria',
-                style: TextStyle(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Container(
+                height: 1,
+                width: double.infinity,
+                color: const Color.fromARGB(221, 52, 52, 52),
+              ),
+            ),
+            //*la galeria de las imagenes del inmueble
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Galeria',
+                  style: TextStyle(
                     fontSize: 25,
                     color: utils.Colors.blanco,
-                    fontWeight: FontWeight.w500),
-              ),
-              TextButton(
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+                TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const GaleriaImagenes()),
+                          builder: (context) => const GaleriaImagenes()
+                      ),
                     );
                   },
                   child: const Text(
                     'Ver todo',
                     style: TextStyle(color: utils.Colors.ocre, fontSize: 15),
-                  ))
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          _galeria(slides: widget.slides),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: const [
-              Text(
-                'Detalles',
-                style: TextStyle(
+                  )
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            _galeria(slides: widget.slides),
+            const SizedBox(
+              height: 20,
+            ),
+            //*detalles del inmueble, como si tiene internt, tipo...
+            Row(
+              children: const [
+                Text(
+                  'Detalles',
+                  style: TextStyle(
                     fontSize: 25,
                     color: utils.Colors.blanco,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          _detalles(
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            _detalles(
               iconoDetalles: widget.iconosDetalles,
-              nombreDetalles: widget.nombreDeatlles),
+              nombreDetalles: widget.nombreDeatlles
+            ),
+          //*restricciones del inmueble como mascotas, fumar...
           Row(
             children: const [
               Text(
@@ -143,7 +156,8 @@ class _DescripcionPublicacionesState extends State<DescripcionPublicaciones> {
                 style: TextStyle(
                     fontSize: 25,
                     color: utils.Colors.rojo,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500
+                ),
               ),
             ],
           ),
@@ -155,28 +169,30 @@ class _DescripcionPublicacionesState extends State<DescripcionPublicaciones> {
             nombreRetricciones: widget.nombreRestricciones,
           ),
           Padding(
-            padding: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.53),
+            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.53),
             child: const Text(
               'Descripción',
               style: TextStyle(
-                  fontSize: 25,
-                  color: utils.Colors.blanco,
-                  fontWeight: FontWeight.w500),
+                fontSize: 25,
+                color: utils.Colors.blanco,
+                fontWeight: FontWeight.w500
+              ),
             ),
           ),
           _descripcion(descripcion: widget.descripcion),
           const SizedBox(
             height: 40,
           ),
+          //*el mapa donde muestra la ubiccaion del inmueble
           Row(
             children: const [
               Text(
                 'Ubicación',
                 style: TextStyle(
-                    fontSize: 25,
-                    color: utils.Colors.blanco,
-                    fontWeight: FontWeight.w500),
+                  fontSize: 25,
+                  color: utils.Colors.blanco,
+                  fontWeight: FontWeight.w500
+                ),
               ),
             ],
           ),
@@ -199,12 +215,14 @@ class _DescripcionPublicacionesState extends State<DescripcionPublicaciones> {
           const SizedBox(
             height: 30,
           ),
+          //*la parte inferior de la pagina, precio
           navigationBar()
         ],
       ),
     ));
   }
 }
+
 //*La parte inferior de la pagina
 //*Donde se puede ver el precio y la informacion de contacto
 class navigationBar extends StatelessWidget {
@@ -249,25 +267,23 @@ class navigationBar extends StatelessWidget {
                                   decoration: const BoxDecoration(
                                     border: Border(
                                         bottom: BorderSide(
-                                            width: 1,
-                                            color: Colors.grey)),
+                                            width: 1, color: Colors.grey)),
                                   ),
                                   child: Row(
                                     children: const [
-                                       Icon(
+                                      Icon(
                                         Icons.phone,
                                         color: utils.Colors.ocre,
                                       ),
-                                      SizedBox(width: 5,),
-                                        Text(
-                                          '322 5989663',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight:
-                                                  FontWeight.w500),
-                                        
+                                      SizedBox(
+                                        width: 5,
                                       ),
-                                     
+                                      Text(
+                                        '322 5989663',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -275,11 +291,10 @@ class navigationBar extends StatelessWidget {
                               InkWell(
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
-                                    decoration: const BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     border: Border(
                                         bottom: BorderSide(
-                                            width: 1,
-                                            color: Colors.grey)),
+                                            width: 1, color: Colors.grey)),
                                   ),
                                   child: Row(
                                     children: const [
@@ -288,13 +303,11 @@ class navigationBar extends StatelessWidget {
                                         color: utils.Colors.ocre,
                                       ),
                                       Text(
-                                          'https://web.whatsapp.com/',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight:
-                                                  FontWeight.w500),
+                                        'https://web.whatsapp.com/',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                      
                                     ],
                                   ),
                                 ),
@@ -309,13 +322,11 @@ class navigationBar extends StatelessWidget {
                                         color: utils.Colors.ocre,
                                       ),
                                       Text(
-                                          'correo@gmail.com',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight:
-                                                  FontWeight.w500),
+                                        'correo@gmail.com',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                      
                                     ],
                                   ),
                                 ),
@@ -368,6 +379,7 @@ class _galeria extends StatelessWidget {
 }
 
 //*Lista de detalles de la publicacion
+//*tiene el icono y el nombre
 class _detalles extends StatelessWidget {
   const _detalles({
     Key? key,
@@ -415,6 +427,7 @@ class _detalles extends StatelessWidget {
 }
 
 //*Lista de restricciones de la publicacion
+//*almacena nombre y icono de cada restriccion
 class _restricciones extends StatelessWidget {
   const _restricciones({
     Key? key,
@@ -433,28 +446,30 @@ class _restricciones extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: iconoRestricciones.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        height: 100,
-                        width: 90,
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                iconoRestricciones[index],
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                nombreRetricciones[index]
-                              ],
-                            )
-                          ],
-                        ));
-                  }))
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: iconoRestricciones.length,
+              itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 100,
+                width: 90,
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        iconoRestricciones[index],
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        nombreRetricciones[index]
+                      ],
+                    )
+                  ],
+                ));
+              }
+            )
+          )
         ],
       ),
     );
@@ -462,6 +477,7 @@ class _restricciones extends StatelessWidget {
 }
 
 //*Descripcion general de la publicacion
+//*es un texto que da detalles del inmueble
 class _descripcion extends StatelessWidget {
   _descripcion({
     required this.descripcion,

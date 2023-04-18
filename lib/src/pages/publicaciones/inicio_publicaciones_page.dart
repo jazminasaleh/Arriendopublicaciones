@@ -6,7 +6,9 @@ import 'package:apparriendospublicaciones/src/utils/colors.dart' as utils;
 
 import '../../widgets/slidesShow.dart';
 
+//*Pagina donde muestra todas las publicaciones en general
 //*Pagina donde muestra las publicaciones de sugerencia y guardadas
+
 class InicioPublicaciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,7 @@ class InicioPublicaciones extends StatelessWidget {
     ListaLlenaSugerencias listaSugernecias = new ListaLlenaSugerencias();
     return Scaffold(
       backgroundColor: utils.Colors.fondoOscuro,
+      //*El titulo de la app y los iconos del appBar
       appBar: AppBar(
         leading: const SizedBox(),
         title: Row(
@@ -83,6 +86,7 @@ class InicioPublicaciones extends StatelessWidget {
                     )
                   ],
                 ),
+                //*La parte del filtro segun su ambiente y tipo
                 Row(
                   children: [
                     _buscador(tipo: 'Familiar', color: utils.Colors.ocre),
@@ -99,10 +103,11 @@ class InicioPublicaciones extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
+                //*Lista de inmuebles guardados como favoritos
                 _listaFavoritos(listaFavoritos: listaFavoritos.listaFavoritos),
                 _textSugerencias(context, listaSugernecias),
-                _listaSugerencias(
-                    listaSugerencias: listaSugernecias.listaSugerencias)
+                //*lista de inmuebles sugeridos
+                _listaSugerencias(listaSugerencias: listaSugernecias.listaSugerencias)
               ],
             )),
       ),
@@ -113,37 +118,44 @@ class InicioPublicaciones extends StatelessWidget {
 //*Boton de ver todo para ver la lista de todas las sugerencias
   Row _textSugerencias(
       BuildContext context, ListaLlenaSugerencias listaSugernecias) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Padding(
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Padding(
             padding: EdgeInsets.only(left: 10),
-            child: Text('Sugerencias',
-                style: TextStyle(
-                    color: utils.Colors.blanco,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500))),
-        TextButton(
+            child: Text(
+              'Sugerencias',
+              style: TextStyle(
+                color: utils.Colors.blanco,
+                fontSize: 16,
+                fontWeight: FontWeight.w500
+              )
+            )
+          ),
+          TextButton(
             onPressed: () {
-              Navigator.push(
-                context,
+              Navigator.push(context,
                 MaterialPageRoute(
-                    builder: (context) => ListasPage(
-                          lista: listaSugernecias.listaSugerencias,
-                          titulo: 'Sugerencias',
-                        )),
+                  builder: (context) => ListasPage(
+                    lista: listaSugernecias.listaSugerencias,
+                    titulo: 'Sugerencias',
+                  )
+                ),
               );
             },
             child: const Text(
               'Ver todo',
               style: TextStyle(fontSize: 16),
-            )),
+            )
+          ),
       ],
     );
   }
 }
 
 //*Muestra la lista de inmuebles sugeridos
+//*se usa un listviiew y se le pasa la lista de sugernecias para mostrar esa informacion
+//*siempre que se neecsite infomacion del inmuebel se saca de listasugernacias
 class _listaSugerencias extends StatelessWidget {
   const _listaSugerencias({
     Key? key,
@@ -168,28 +180,24 @@ class _listaSugerencias extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SidesShow(
-                                slides: listaSugerencias[index].imagenes,
-                                direccion: listaSugerencias[index].direccion,
-                                barrio: listaSugerencias[index].barrio,
-                                precio: listaSugerencias[index].precio,
-                                iconosDetalles:
-                                    listaSugerencias[index].iconosDetalle,
-                                nombreDeatlles:
-                                    listaSugerencias[index].nombreDetalle,
-                                iconosRestricciones:
-                                    listaSugerencias[index].iconosRestricciones,
-                                nombreRestricciones:
-                                    listaSugerencias[index].nombreRestricciones,
-                                descripcion: '',
-                              )),
+                        builder: (context) => SidesShow(
+                          slides: listaSugerencias[index].imagenes,
+                          direccion: listaSugerencias[index].direccion,
+                          barrio: listaSugerencias[index].barrio,
+                          precio: listaSugerencias[index].precio,
+                          iconosDetalles:listaSugerencias[index].iconosDetalle,
+                          nombreDeatlles:listaSugerencias[index].nombreDetalle,
+                          iconosRestricciones:listaSugerencias[index].iconosRestricciones,
+                          nombreRestricciones:listaSugerencias[index].nombreRestricciones,
+                          descripcion: '',
+                        )
+                      ),
                     );
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.15,
                     width: MediaQuery.of(context).size.width * 0.90,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     decoration: BoxDecoration(
                       color: utils.Colors.azulOscuro,
                       borderRadius: BorderRadius.circular(25),
@@ -204,13 +212,13 @@ class _listaSugerencias extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.25,
                               height: MediaQuery.of(context).size.height * 0.25,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    opacity: 0.50,
-                                    image: AssetImage(
-                                        listaSugerencias[index].iamgen),
-                                    fit: BoxFit.cover,
-                                  )),
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  opacity: 0.50,
+                                  image: AssetImage(listaSugerencias[index].iamgen),
+                                  fit: BoxFit.cover,
+                                )
+                              ),
                             ),
                           ),
                           const SizedBox(
@@ -221,21 +229,24 @@ class _listaSugerencias extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      listaSugerencias[index].direccion,
-                                      style: const TextStyle(
-                                          color: utils.Colors.blanco,
-                                          fontWeight: FontWeight.w300),
-                                      maxLines: 3,
-                                      textAlign: TextAlign.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    listaSugerencias[index].direccion,
+                                    style: const TextStyle(
+                                      color: utils.Colors.blanco,
+                                      fontWeight: FontWeight.w300
                                     ),
-                                  ]),
+                                    maxLines: 3,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ]
+                              ),
                               Text(
                                 listaSugerencias[index].barrio,
                                 style: const TextStyle(
-                                    fontSize: 16, color: utils.Colors.blanco),
+                                  fontSize: 16, color: utils.Colors.blanco
+                                ),
                               ),
                               Text(
                                 '\$${listaSugerencias[index].precio}',
@@ -292,14 +303,10 @@ class _listaFavoritos extends StatelessWidget {
                                 direccion: listaFavoritos[index].direccion,
                                 barrio: listaFavoritos[index].barrio,
                                 precio: listaFavoritos[index].precio,
-                                iconosDetalles:
-                                    listaFavoritos[index].iconosDetalle,
-                                nombreDeatlles:
-                                    listaFavoritos[index].nombreDetalle,
-                                iconosRestricciones:
-                                    listaFavoritos[index].iconosRestricciones,
-                                nombreRestricciones:
-                                    listaFavoritos[index].nombreRestricciones,
+                                iconosDetalles:listaFavoritos[index].iconosDetalle,
+                                nombreDeatlles:listaFavoritos[index].nombreDetalle,
+                                iconosRestricciones:listaFavoritos[index].iconosRestricciones,
+                                nombreRestricciones:listaFavoritos[index].nombreRestricciones,
                                 descripcion: listaFavoritos[index].descripcion,
                               )),
                     );

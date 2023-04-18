@@ -14,6 +14,7 @@ class UbicacionPage extends StatefulWidget {
   State<UbicacionPage> createState() => _UbicacionPageState();
 }
 //*para observar el mapa se consumio la api de google maps
+//*Marker: es utilizado para marcar donde queda la  UPTC seccional Sogamoso
 class _UbicacionPageState extends State<UbicacionPage> {
   Completer<GoogleMapController> _controller = Completer();
   UbicacionController _ubicacionController = new UbicacionController();
